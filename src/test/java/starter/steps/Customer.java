@@ -4,6 +4,7 @@ import net.serenitybdd.core.steps.ScenarioActor;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.Steps;
 import starter.OrderReceipt;
+import starter.Receipt;
 
 public class Customer extends ScenarioActor {
 
@@ -25,5 +26,10 @@ public class Customer extends ScenarioActor {
     @Step("#actor places an order for {0} {1}")
     public OrderReceipt placeAnOrderFor(int quantity, String product) {
         return coffeeOrders.placeOrder(customerId,quantity,product);
+    }
+
+    @Step("#actor requests a receipt")
+    public Receipt requestsAReceipt() {
+        return coffeeOrders.getRecipeFor(customerId);
     }
 }

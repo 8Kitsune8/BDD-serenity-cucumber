@@ -19,7 +19,17 @@ public class Order {
         return new OrderReceipt(customerId, quantity, product);
     }
 
+    public long getCustomerId() {
+        return customerId;
+    }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public String getProduct() {
+        return product;
+    }
 
     @Override
     public boolean equals(Object o) {
