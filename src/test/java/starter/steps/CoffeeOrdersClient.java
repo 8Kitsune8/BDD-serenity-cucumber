@@ -1,14 +1,12 @@
 package starter.steps;
 
 import net.thucydides.core.annotations.Steps;
-import starter.Order;
-import starter.OrderReceipt;
-import starter.Receipt;
-import starter.UnknownProductException;
+import starter.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CoffeeOrdersClient {
     List<Order> orders = new ArrayList<>();
@@ -30,9 +28,16 @@ public class CoffeeOrdersClient {
                 .sum();
         double serviceFee = subTotal * 5 / 100;
         double total = subTotal + serviceFee;
+
+        List<ReceiptItem> recipeItems = new ArrayList<>();
+        orders.stream()
+                .filter(order -> order.getCustomerId() == customerId).forEach( order -> {
+                    recipeItems.add(new ReceiptItem(order.getProduct(), order.getQuantity(),subtotalFor(order)));
+                });
+
         return new Receipt(roundedTo2DecimalPlaces(subTotal),
                 roundedTo2DecimalPlaces(serviceFee),
-                roundedTo2DecimalPlaces(total));
+                roundedTo2DecimalPlaces(total), recipeItems);
     }
 
     private double roundedTo2DecimalPlaces(double value) {

@@ -6,14 +6,17 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.serenitybdd.core.Serenity;
 import net.thucydides.core.annotations.Steps;
+import org.hamcrest.CoreMatchers;
 import starter.*;
 import starter.steps.ProductCatalog;
 import starter.steps.Barista;
 import starter.steps.Customer;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 
 public class OrderACoffeeStepDefinitions {
@@ -66,5 +69,12 @@ public class OrderACoffeeStepDefinitions {
     public void theFollowingPrices(List<ProductPrice> productPrices) {
 
         productCatalog.addProductsWithPrices(productPrices);
+    }
+
+    @And("^the receipt should contain the line items:$")
+    public void theReceiptShouldContainTheLineItems(List<ReceiptItem> receiptItems) {
+
+        System.out.println(receiptItems);
+        assertEquals(receipt.getItems(), receiptItems);
     }
 }
